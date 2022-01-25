@@ -15,8 +15,8 @@ const authMiddleWare = async (req, res, next) => {
 				console.log(token);
 				next();
 			})
-			.catch(() => {
-				console.log("here");
+			.catch((error) => {
+				console.log(error);
 				res.status(403).send("Unauthorized");
 			});
 	} else {

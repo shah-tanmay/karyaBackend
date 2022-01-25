@@ -1,11 +1,14 @@
 const express = require("express");
 require("dotenv").config();
+
 const app = express();
 const { graphqlHTTP } = require("express-graphql");
 const mongoose = require("mongoose");
 const authMiddleWare = require("./middleware/auth");
-const schema = require("./schema/UserSchcema");
-
+const schema = require("./graphqlSchema/index");
+const bodyParser = require("body-parser");
+app.use(require("cors")());
+app.use(bodyParser.json());
 app.get("/", (req, res) => {
 	res.send("Hello world");
 });
