@@ -34,7 +34,6 @@ const Mutation = new GraphQLObjectType({
 				premium: { type: new GraphQLNonNull(GraphQLBoolean) },
 			},
 			resolve(parent, args) {
-				console.log("here", args);
 				const user = new User({
 					name: args.name,
 					email: args.email,

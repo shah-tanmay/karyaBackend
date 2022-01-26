@@ -11,13 +11,11 @@ const authMiddleWare = async (req, res, next) => {
 		admin
 			.auth()
 			.verifyIdToken(req.headers.token)
-			.then((token) => {
-				console.log(token);
+			.then(() => {
 				next();
 			})
 			.catch((error) => {
 				console.log(error);
-				res.status(403).send("Unauthorized");
 			});
 	} else {
 		res.status(403).send("Unauthorized");
