@@ -15,6 +15,10 @@ app.get("/", (req, res) => {
 
 mongoose.connect(
 	`mongodb+srv://admin:${process.env.DB_PASSWORD}@cluster0.8ohlm.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`,
+	{
+		useNewUrlParser: true,
+		useUnifiedTopology: true,
+	},
 );
 
 mongoose.connection.once("open", () => {

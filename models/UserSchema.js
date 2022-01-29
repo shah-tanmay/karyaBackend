@@ -1,15 +1,28 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const userScehama = new Schema({
-	name: {
-		type: String,
+const userSchema = new Schema(
+	{
+		name: {
+			type: String,
+			required: true,
+		},
+		email: {
+			type: String,
+			unique: true,
+			required: true,
+		},
+		premium: Boolean,
 	},
-	email: {
-		type: String,
-		unique: true,
+	{
+		timestamps: true,
 	},
-	premium: Boolean,
+);
+
+userSchema.virtual("tasks", {
+	ref: "Tasks",
+	localField: "_id",
+	foreignField: "owner",
 });
 
-module.exports = mongoose.model("User", userScehama);
+module.exports = mongoose.model("User", userSchema);

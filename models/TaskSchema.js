@@ -1,29 +1,41 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const taskScehama = new Schema({
-	completed: {
-		type: Boolean,
+const taskScehama = new Schema(
+	{
+		completed: {
+			type: Boolean,
+			required: true,
+		},
+		notes: {
+			type: String,
+			required: true,
+		},
+		list: {
+			type: String,
+			required: true,
+		},
+		due: {
+			type: String,
+			required: true,
+		},
+		tags: {
+			type: String,
+			required: true,
+		},
+		description: {
+			type: String,
+			required: true,
+		},
+		owner: {
+			type: Schema.Types.ObjectId,
+			required: true,
+			ref: "User",
+		},
 	},
-	email: {
-		type: String,
-		unique: true,
+	{
+		timestamps: true,
 	},
-	notes: {
-		type: String,
-	},
-	list: {
-		type: String,
-	},
-	due: {
-		type: String,
-	},
-	tags: {
-		type: String,
-	},
-	description: {
-		type: String,
-	},
-});
+);
 
-module.exports = mongoose.model("Task", taskScehama);
+module.exports = mongoose.model("Tasks", taskScehama);

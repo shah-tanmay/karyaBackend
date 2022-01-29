@@ -5,21 +5,30 @@ const {
 	GraphQLString,
 	GraphQLBoolean,
 	GraphQLNonNull,
+	GraphQLList,
 } = require("graphql");
 const { userResolver } = require("../resolver/userResolver");
-const { UserType } = require("../graphqlTypes/userType");
+const { UserType, CreateUserInputType } = require("../graphqlTypes/userType");
 const User = require("../models/UserSchema");
 const taskResolver = require("../resolver/taskResolver");
 const { TaskType } = require("../graphqlTypes/taskType");
+const getTaskResolver = require("../resolver/getTaskResolver");
 
 const RootQuery = new GraphQLObjectType({
 	name: "RootQueryType",
 	fields: {
-		user: {
+		getUser: {
 			type: UserType,
 			args: { email: { type: GraphQLString } },
 			resolve(parent, args) {
 				return userResolver(args);
+			},
+		},
+		getTasks: {
+			type: new GraphQLNonNull(new GraphQLList(new GraphQLNonNull(TaskType))),
+			args: { email: { type: GraphQLString } },
+			resolve(parent, args) {
+				return getTaskResolver(args);
 			},
 		},
 	},
@@ -50,11 +59,11 @@ const Mutation = new GraphQLObjectType({
 				notes: { type: GraphQLString },
 				subtasks: { type: GraphQLString },
 				description: { type: GraphQLString },
+				email: { type: GraphQLString },
 				completed: { type: GraphQLBoolean },
 				list: { type: GraphQLString },
 				due: { type: GraphQLString },
 				tags: { type: GraphQLString },
-				email: { type: GraphQLString },
 			},
 			resolve(parents, args) {
 				return taskResolver(args);
